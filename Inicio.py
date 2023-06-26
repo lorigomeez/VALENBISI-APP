@@ -78,7 +78,7 @@ with st.form('entry_form', clear_on_submit = False):
             
 
         if selected_figure == 'Espacios libres disponibles':
-            """df_filtrado = df[(df['Mes'] == selected_month) & (df['Dia'] == selected_day) & (df['Hora'] == selected_hour) & (df['Año'] == selected_year)]
+            df_filtrado = df[(df['Mes'] == selected_month) & (df['Dia'] == selected_day) & (df['Hora'] == selected_hour) & (df['Año'] == selected_year)]
             df_top_10 = df_filtrado.sort_values(by='avg_free', ascending=False).head(10)
             import plotly.express as px
             fig = px.bar(df_top_10, x='name', y='avg_free',
@@ -86,20 +86,8 @@ with st.form('entry_form', clear_on_submit = False):
                          labels={'name': 'Estación', 'avg_free': 'Media de espacios libres'},
                          title=f'Las 10 estaciones con más espacios libres disponibles para los datos introducidos')
             fig.update_layout(margin = dict(l=0, r=0, t =30, b = 5))
-            st.plotly_chart(fig, use_container_width=True)"""
-            from plotnine import ggplot, aes, geom_bar, labs, theme_minimal
-
-            # Filtrar los datos
-            df_filtrado = df[(df['Mes'] == selected_month) & (df['Dia'] == selected_day) & (df['Hora'] == selected_hour) & (df['Año'] == selected_year)]
-            df_top_10 = df_filtrado.sort_values(by='avg_free', ascending=False).head(10)
-            
-            # Crear el gráfico utilizando ggplot
-            fig = (ggplot(df_top_10, aes(x='name', y='avg_free', fill='avg_free')) +
-             geom_bar(stat='identity') +
-             labs(x='Estación', y='Media de espacios libres',
-                  title='Las 10 estaciones con más espacios libres disponibles para los datos introducidos') +
-             theme_minimal())
             st.plotly_chart(fig, use_container_width=True)
+
 
         if selected_figure == 'Estaciones cerradas':
             st.write('Estaciones cerradas')
