@@ -8,7 +8,6 @@ Created on Thu Jun 22 21:44:23 2023
 import streamlit as st
 
 
-import plotly.graph_objects as go
 import pandas as pd
 from tabulate import tabulate
 
