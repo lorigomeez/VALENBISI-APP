@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from sklearn.compose import make_column_transformer
+from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.linear_model import LinearRegression
 import requests
