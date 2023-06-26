@@ -9,7 +9,6 @@ import streamlit as st
 
 
 import pandas as pd
-from tabulate import tabulate
 
 ruta_archivo = "C:/Users/Usuario/Desktop/UNI/EDM/trabajo/primavera/valenbisi_procesado.csv"
 
