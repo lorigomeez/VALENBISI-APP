@@ -18,7 +18,7 @@ zip_file = zipfile.ZipFile(io.BytesIO(response.content))
 csv_file_name = zip_file.namelist()[0]
     
 # Leer el archivo CSV dentro del archivo comprimido y cargarlo en un DataFrame
-df = pd.read_csv(zip_file.open(csv_file_name))
+data = pd.read_csv(zip_file.open(csv_file_name))
 
 #CREAR MODELO
 # Seleccionar las variables relevantes para la predicción
