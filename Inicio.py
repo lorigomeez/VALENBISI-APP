@@ -9,11 +9,19 @@ import streamlit as st
 
 
 import pandas as pd
+import requests
+import zipfile
+import requests
 
-ruta_archivo = "https://raw.githubusercontent.com/lorigomeez/VALENBISI-APP/valenbisi_procesado_coordenadas.zip/valenbisi_procesado_coordenadas.csv"
+url = 'https://github.com/lorigomeez/VALENBISI-APP/blob/main/valenbisi_procesado_coordenadas.zip'
+response = requests.get(url)
+
+# Guarda el contenido del archivo comprimido en disco
+with open('valenbisi_procesado_coordenadas.zip', 'wb') as df:
+    df.write(response.content)
 
 # Cargar el archivo CSV en un DataFrame
-df = pd.read_csv(ruta_archivo)
+#df = pd.read_csv(ruta_archivo)
 
 
 page_title = 'VALENBISI Datos históricos'
