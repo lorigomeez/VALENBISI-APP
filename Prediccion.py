@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.linear_model import LinearRegression
-
+import requests
 
 url = 'https://github.com/lorigomeez/VALENBISI-APP/raw/main/valenbisi_procesado_coordenadas.zip'
 response = requests.get(url)
