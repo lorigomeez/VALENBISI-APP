@@ -94,7 +94,6 @@ with st.form('entry_form', clear_on_submit = False):
             datos = df[(df['open'] == 'F') & (df['Mes'] == selected_month) & (df['Dia'] == selected_day) & (df['Hora'] == selected_hour) & (df['Año'] == selected_year)]
             datos = datos[['name', 'address', 'number_']]
             datos = datos.rename(columns={'name': 'Estación', 'address': 'Dirección', 'number_': 'Número'})
-            datos = datos.style.hide_index()
 
             styles = [
     {"selector": "table", "props": [("border-collapse", "collapse")]},
