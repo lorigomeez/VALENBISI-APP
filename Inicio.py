@@ -6,8 +6,8 @@ Created on Thu Jun 22 21:44:23 2023
 """
 
 import streamlit as st
-import Predicción
-import Estaciones más cercanas
+import Prediccion
+import Estaciones
 
 import pandas as pd
 import requests
