@@ -12,6 +12,7 @@ Original file is located at
 #pip install webdriver_manager
 
 import re
+import io
 import requests
 import zipfile
 from selenium import webdriver
