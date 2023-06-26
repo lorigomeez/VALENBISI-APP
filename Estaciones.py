@@ -108,7 +108,7 @@ if submit_button:
     tu_longitud = longitud
     
     # DataFrame con las estaciones
-    df_estaciones = pd.read_csv("C:/Users/Usuario/Desktop/UNI/EDM/trabajo/primavera/solo_coordenadas.csv")  # Reemplaza "archivo.csv" con el nombre de tu archivo CSV
+    df_estaciones = pd.read_csv(""https://github.com/lorigomeez/VALENBISI-APP/solo_coordenadas.csv")  # Reemplaza "archivo.csv" con el nombre de tu archivo CSV
     df_estaciones["distancia"] = df_estaciones.apply(
         lambda row: geodesic((tu_latitud, tu_longitud), (row["geo_point_2d"].split(',')[0], row["geo_point_2d"].split(',')[1])).kilometers,
         axis=1
