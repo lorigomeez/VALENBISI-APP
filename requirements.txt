@@ -1,8 +1,5 @@
 plotly==5.15.0
 streamlit==1.23.1
 streamlit-folium==0.12.0
-requests @ file:///C:/ci/requests_1657735340829/work
-requests-file @ file:///Users/ktietz/demo/mc3/conda-bld/requests-file_1629455781986/work
-requests-toolbelt @ file:///Users/ktietz/demo/mc3/conda-bld/requests-toolbelt_1629456163440/work
-pandas @ file:///C:/b/abs_b9kefbuby2/croot/pandas_1677835593760/work
+
 
