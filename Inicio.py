@@ -10,7 +10,7 @@ import streamlit as st
 
 import pandas as pd
 
-ruta_archivo = "C:/Users/Usuario/Desktop/UNI/EDM/trabajo/primavera/valenbisi_procesado.csv"
+ruta_archivo = "https://raw.githubusercontent.com/lorigomeez/VALENBISI-APP/valenbisi_procesado.csv"
 
 # Cargar el archivo CSV en un DataFrame
 df = pd.read_csv(ruta_archivo)
