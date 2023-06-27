@@ -117,7 +117,7 @@ import streamlit as st
 import folium
 
 st.header('ESTACIONES MÁS CERCANAS')
-st.write('Selecciona un punto en el mapa')
+
 ## OBTENER COORDENADAS
 
 import requests
