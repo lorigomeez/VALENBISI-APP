@@ -305,9 +305,7 @@ model = LinearRegression()
 model.fit(X, y)
 
 
-st.title("Predicción de disponibilidad")
-
-
+st.header("Predicción de disponibilidad")
 
 Hora = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ,13,14,15,16,17,18,19,20,21,22,23]
 Dia = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
@@ -332,7 +330,6 @@ with st.form('entry_form', clear_on_submit = False):
         selected_hour = st.session_state.hour
         selected_name = st.session_state.name
         selected_figure = st.session_state.figure
-        
 
         st.success('Datos guardados')
 
@@ -346,9 +343,6 @@ with st.form('entry_form', clear_on_submit = False):
             
             #avg_av
             st.write("Media de bicicletas disponibles: ", round(prediccion[0][0]))
-
-            
-            
 
         if selected_figure == 'Espacios libres':
             nuevos_datos = pd.DataFrame([[selected_day, selected_month, selected_year, selected_hour, selected_name]], columns=variables)
