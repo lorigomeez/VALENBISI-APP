@@ -115,7 +115,7 @@ with st.form('entry_form', clear_on_submit = False):
 import zipfile
 import streamlit as st
 import folium
-
+from streamlit_folium import folium_static
 
 st.header('ESTACIONES MÁS CERCANAS')
 st.write('Selecciona un punto en el mapa')
