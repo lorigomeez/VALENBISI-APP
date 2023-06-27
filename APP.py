@@ -115,28 +115,33 @@ with st.form('entry_form', clear_on_submit = False):
 import zipfile
 import streamlit as st
 import folium
-from streamlit_folium import folium_static
 
 st.header('ESTACIONES MÁS CERCANAS')
 st.write('Selecciona un punto en el mapa')
 ## OBTENER COORDENADAS
 
+import streamlit_leaflet as leaflet
+
 # Coordenadas iniciales de Valencia
 initial_coords = (39.46975, -0.37739)
 
-# Crear el mapa de Folium centrado en Valencia
-mapa = folium.Map(location=initial_coords, zoom_start=13)
+# Crear el mapa centrado en Valencia
+m = leaflet.Map(center=initial_coords, zoom=13)
+
+# Agregar control de clic para obtener coordenadas
+click_control = leaflet.LatLngPopup()
+m.add_control(click_control)
 
 # Mostrar el mapa en Streamlit
-folium_static(mapa)
+st.write(m)
 
-# Obtener la ubicación seleccionada por el usuario
-result = mapa.add_child(folium.LatLngPopup())
-
-if result:
-    selected_location = result.location
-    latitud = selected_location[0]
-    longitud = selected_location[1]
+# Obtener las coordenadas seleccionadas por el usuario
+if click_control.coordinates:
+    latitud = click_control.coordinates[0]
+    longitud = click_control.coordinates[1]
+    st.write("Coordenadas seleccionadas:")
+    st.write("Latitud:", latitud)
+    st.write("Longitud:", longitud)
     
     ## COMPARAR COORDENADAS (ENCONTRAR LAS ESTACIONES MÁS CERCANAS)
     from geopy.distance import geodesic
