@@ -117,7 +117,7 @@ import zipfile
 import streamlit as st
 import folium
 
-st.header('ESTACIONES MÁS CERCANAS')
+st.header('Estaciones más cercanas')
 
 ## OBTENER COORDENADAS
 
