@@ -350,13 +350,10 @@ with st.form('entry_form', clear_on_submit = False):
             
             # Realizar la predicción
             prediccion = model.predict(nuevos_datos_encoded)
-            
-            # Mostrar la predicción
-            st.subheader("Resultados de la predicción:")
-            st.write(prediccion)
+        
             
             #avg_av
-            st.write("Media de espacios libres: ",prediccion[0][1])
+            st.write("Media de espacios libres: ",round(prediccion[0][1]))
     
     
 
