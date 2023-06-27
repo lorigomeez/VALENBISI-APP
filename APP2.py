@@ -21,7 +21,7 @@ csv_file_name = zip_file.namelist()[0]
 # Leer el archivo CSV dentro del archivo comprimido y cargarlo en un DataFrame
 data = pd.read_csv(zip_file.open(csv_file_name))
 
-#CREAR MODELO
+"""#CREAR MODELO
 # Seleccionar las variables relevantes para la predicción
 variables = ['Dia', 'Mes', 'Año', 'Hora','name']
 target = ['avg_av']
@@ -43,7 +43,7 @@ y = data[target]
 model = LinearRegression()
 
 # Entrenar el modelo
-model.fit(X, y)
+model.fit(X, y)"""
 
 
 st.header("Predicción de disponibilidad")
@@ -75,7 +75,7 @@ with st.form('entry_form', clear_on_submit = False):
         st.success('Datos guardados')
 
         
-        if selected_figure == 'Bicicletas disponibles':
+        """if selected_figure == 'Bicicletas disponibles':
             nuevos_datos = pd.DataFrame([[selected_day, selected_month, selected_year, selected_hour, selected_name]], columns=variables)
             nuevos_datos_encoded = column_transformer.transform(nuevos_datos)
             
@@ -84,7 +84,7 @@ with st.form('entry_form', clear_on_submit = False):
             
             #avg_av
             st.write("Media de bicicletas disponibles: ", round(prediccion))
-            #round(prediccion[0][0])
+            #round(prediccion[0][0])"""
 
         """if selected_figure == 'Espacios libres':
             nuevos_datos = pd.DataFrame([[selected_day, selected_month, selected_year, selected_hour, selected_name]], columns=variables)
