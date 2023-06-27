@@ -120,28 +120,33 @@ st.header('ESTACIONES MÁS CERCANAS')
 st.write('Selecciona un punto en el mapa')
 ## OBTENER COORDENADAS
 
-import streamlit_leaflet as leaflet
+import requests
 
-# Coordenadas iniciales de Valencia
-initial_coords = (39.46975, -0.37739)
+def obtener_coordenadas(direccion):
+    # URL de la API de geocodificación inversa de Nominatim
+    url = f"https://nominatim.openstreetmap.org/search?format=json&q={direccion}"
+    
+    # Realizar la solicitud GET a la API
+    response = requests.get(url)
+    
+    # Obtener la respuesta en formato JSON
+    data = response.json()
+    
+    # Verificar si se encontraron resultados
+    if len(data) > 0:
+        # Obtener las coordenadas de la primera coincidencia
+        latitud = float(data[0]['lat'])
+        longitud = float(data[0]['lon'])
+        
+        # Devolver las coordenadas
+        return latitud, longitud
+    else:
+        return None
 
-# Crear el mapa centrado en Valencia
-m = leaflet.Map(center=initial_coords, zoom=13)
+coordenadas = obtener_coordenadas(direccion)
 
-# Agregar control de clic para obtener coordenadas
-click_control = leaflet.LatLngPopup()
-m.add_control(click_control)
-
-# Mostrar el mapa en Streamlit
-st.write(m)
-
-# Obtener las coordenadas seleccionadas por el usuario
-if click_control.coordinates:
-    latitud = click_control.coordinates[0]
-    longitud = click_control.coordinates[1]
-    st.write("Coordenadas seleccionadas:")
-    st.write("Latitud:", latitud)
-    st.write("Longitud:", longitud)
+if coordenadas:
+    latitud, longitud = coordenadas
     
     ## COMPARAR COORDENADAS (ENCONTRAR LAS ESTACIONES MÁS CERCANAS)
     from geopy.distance import geodesic
