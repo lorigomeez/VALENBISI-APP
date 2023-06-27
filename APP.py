@@ -138,64 +138,22 @@ if submit_button:
     
     ## OBTENER COORDENADAS
     
-    # Configuración de Selenium para usar Chrome
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Ejecución sin abrir ventana del navegador
-    #driver = webdriver.Chrome(options=chrome_options)
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-    
-    # URL de la página web
-    url = "https://www.coordenadas-gps.com/convertidor-de-coordenadas-gps"
-    
-    # Obtener datos del usuario
-    #direccion = input("Introduce una dirección: ")
-    
-    # Navegar a la página web
-    driver.get(url)
-    
-    # Esperar a que la página se cargue completamente
-    driver.implicitly_wait(10)
-    
-    # Introducir los datos del municipio y calle/número en los campos correspondientes
-    input_direccion = driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[3]/div[1]/form[1]/div[1]/div/input")
-    input_direccion.send_keys(direccion)
-    
-    
-    # Hacer clic en el botón de búsqueda
-    boton_buscar = driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[3]/div[1]/form[1]/div[2]/div/button")
-    boton_buscar.click()
-    
-    # Esperar a que se carguen los resultados
-    driver.implicitly_wait(6)
-    
-    # Obtener las coordenadas EPSG
-    info = driver.find_element(By.XPATH, "/html/body/div[2]/div[2]/div[3]/div[2]/div/div[4]/div[2]/table")
-    
-    # Obtener todas las filas de la tabla
-    filas = info.find_elements(By.TAG_NAME, "tr")
-    
-    info2 = []
-    # Iterar sobre cada fila y obtener los datos de las celdas
-    for fila in filas:
-        # Obtener todas las celdas de la fila
-        celdas = fila.find_elements(By.TAG_NAME, "td")
+    from geopy.geocoders import Nominatim
+
+    def obtener_coordenadas(direccion):
+        geolocator = Nominatim(user_agent="my_app")  # Crea una instancia del geocodificador de Nominatim
+        location = geolocator.geocode(direccion)  # Obtiene la ubicación a partir de la dirección
         
-        # Obtener el texto de cada celda e imprimirlo
-        for celda in celdas:
-            texto_celda = celda.text
-            info2.append(texto_celda)
-    
-    latitud = float(info2[1])
-    longitud = float(info2[2])
-    
-    
-    coordenadas = [float(latitud), float(longitud)]
-    
-    print(coordenadas)
-    
-    # Cerrar el navegador
-    driver.quit()
-    
+        if location:
+            latitud = location.latitude
+            longitud = location.longitude
+            
+            return latitud, longitud
+        else:
+            print("No se pudo obtener la ubicación para la dirección proporcionada.")
+            return None
+            
+    obtener_coordenadas(direccion)
     
     ## COMPARAR COORDENADAS (ENCONTRAR LAS ESTACIONES MÁS CERCANAS)
     from geopy.distance import geodesic
