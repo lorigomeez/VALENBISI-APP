@@ -112,18 +112,7 @@ with st.form('entry_form', clear_on_submit = False):
 
 
 ### MAPA
-import re
-import io
-import requests
 import zipfile
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.common.exceptions import NoSuchElementException
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import streamlit as st
 
 
@@ -138,80 +127,80 @@ if submit_button:
     
     ## OBTENER COORDENADAS
     
-    from geopy.geocoders import Nominatim
+    # Coordenadas iniciales de Valencia
+    initial_coords = (39.46975, -0.37739)
 
-    def obtener_coordenadas(direccion):
-        geolocator = Nominatim(user_agent="my_app")  # Crea una instancia del geocodificador de Nominatim
-        location = geolocator.geocode(direccion)  # Obtiene la ubicación a partir de la dirección
-        
-        if location:
-            latitud = location.latitude
-            longitud = location.longitude
-            
-            return latitud, longitud
-        else:
-            print("No se pudo obtener la ubicación para la dirección proporcionada.")
-            return None
-            
-    obtener_coordenadas(direccion)
-    
-    ## COMPARAR COORDENADAS (ENCONTRAR LAS ESTACIONES MÁS CERCANAS)
-    from geopy.distance import geodesic
-    import pandas as pd
-    import folium
-    
-    # Coordenadas de referencia
-    tu_latitud = latitud
-    tu_longitud = longitud
-    
-    # DataFrame con las estaciones
-    df_estaciones = pd.read_csv("https://github.com/lorigomeez/VALENBISI-APP/solo_coordenadas.csv")  # Reemplaza "archivo.csv" con el nombre de tu archivo CSV
-    df_estaciones["distancia"] = df_estaciones.apply(
-        lambda row: geodesic((tu_latitud, tu_longitud), (row["geo_point_2d"].split(',')[0], row["geo_point_2d"].split(',')[1])).kilometers,
-        axis=1
-    )
-    df_estaciones_cercanas = df_estaciones.nsmallest(5, "distancia")
-    
-    # Imprimir las estaciones más cercanas
-    #for index, row in df_estaciones_cercanas.iterrows():
-        #print(row["name"])
-    
-    
-    # MOSTRAR EN MAPA
-    from streamlit_folium import folium_static
-    import folium
-    import streamlit as st
-    
-    # Crear el mapa de Folium centrado en la calle seleccionada
-    mapa = folium.Map(location=[latitud, longitud], zoom_start=15)
-    
-    # Agregar marcador en la ubicación de la calle seleccionada
-    folium.Marker(
-        location=[latitud, longitud],
-        icon=folium.Icon(color='blue', icon='info-sign', popup = direccion)
-    ).add_to(mapa)
-    
-    # Agregar marcadores para las estaciones más cercanas
-    for index, row in df_estaciones_cercanas.iterrows():
-        folium.Marker(
-            location=[row['latitud'], row['longitud']],
-            popup=row['name'],
-            icon=folium.Icon(color='red')
-        ).add_to(mapa)
-    
-    st.markdown(
-    """
-    <style>
-    .css-1aumxhk {
-        width: 100%;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+    # Crear el mapa de Folium centrado en Valencia
+    mapa = folium.Map(location=initial_coords, zoom_start=13)
 
-    st.header('Mapa con las 5 estaciones más cercanas a la dirección introducida.')
-    st.write('El marcador azul es la dirección introducida y los marcadores rojos son las estaciones más cercanas. Al pulsar sobre estos marcadores aparece los nombre de las estaciones.')
+    # Mostrar el mapa en Streamlit
     folium_static(mapa)
+
+    # Obtener la ubicación seleccionada por el usuario
+    result = mapa.add_child(folium.LatLngPopup())
+
+    if result:
+        selected_location = result.location
+        latitud = selected_location[0]
+        longitud = selected_location[1]
+    
+        ## COMPARAR COORDENADAS (ENCONTRAR LAS ESTACIONES MÁS CERCANAS)
+        from geopy.distance import geodesic
+        import pandas as pd
+        import folium
+        
+        # Coordenadas de referencia
+        tu_latitud = latitud
+        tu_longitud = longitud
+        
+        # DataFrame con las estaciones
+        df_estaciones = pd.read_csv("https://github.com/lorigomeez/VALENBISI-APP/solo_coordenadas.csv")  # Reemplaza "archivo.csv" con el nombre de tu archivo CSV
+        df_estaciones["distancia"] = df_estaciones.apply(
+            lambda row: geodesic((tu_latitud, tu_longitud), (row["geo_point_2d"].split(',')[0], row["geo_point_2d"].split(',')[1])).kilometers,
+            axis=1
+        )
+        df_estaciones_cercanas = df_estaciones.nsmallest(5, "distancia")
+        
+        # Imprimir las estaciones más cercanas
+        #for index, row in df_estaciones_cercanas.iterrows():
+            #print(row["name"])
+        
+        
+        # MOSTRAR EN MAPA
+        from streamlit_folium import folium_static
+        import folium
+        import streamlit as st
+        
+        # Crear el mapa de Folium centrado en la calle seleccionada
+        mapa = folium.Map(location=[latitud, longitud], zoom_start=15)
+        
+        # Agregar marcador en la ubicación de la calle seleccionada
+        folium.Marker(
+            location=[latitud, longitud],
+            icon=folium.Icon(color='blue', icon='info-sign', popup = direccion)
+        ).add_to(mapa)
+        
+        # Agregar marcadores para las estaciones más cercanas
+        for index, row in df_estaciones_cercanas.iterrows():
+            folium.Marker(
+                location=[row['latitud'], row['longitud']],
+                popup=row['name'],
+                icon=folium.Icon(color='red')
+            ).add_to(mapa)
+        
+        st.markdown(
+        """
+        <style>
+        .css-1aumxhk {
+            width: 100%;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+    
+        st.header('Mapa con las 5 estaciones más cercanas a la dirección introducida.')
+        st.write('El marcador azul es la dirección introducida y los marcadores rojos son las estaciones más cercanas. Al pulsar sobre estos marcadores aparece los nombre de las estaciones.')
+        folium_static(mapa)
 
 
