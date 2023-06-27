@@ -21,7 +21,7 @@ csv_file_name = zip_file.namelist()[0]
 # Leer el archivo CSV dentro del archivo comprimido y cargarlo en un DataFrame
 data = pd.read_csv(zip_file.open(csv_file_name))
 
-"""#CREAR MODELO
+#CREAR MODELO
 # Seleccionar las variables relevantes para la predicción
 variables = ['Dia', 'Mes', 'Año', 'Hora','name']
 target = ['avg_av']
@@ -39,7 +39,7 @@ feature_names = name_categories + variables[1:]
 X = data_encoded
 y = data[target]
 
-# Crear el modelo de regresión lineal
+"""# Crear el modelo de regresión lineal
 model = LinearRegression()
 
 # Entrenar el modelo
