@@ -27,7 +27,7 @@ csv_file_name = zip_file.namelist()[0]
 # Leer el archivo CSV dentro del archivo comprimido y cargarlo en un DataFrame
 df = pd.read_csv(zip_file.open(csv_file_name))
 
-page_title = 'VALENBISI Datos históricos'
+page_title = 'VALENBISI'
 layout = 'wide'
 
 st.set_page_config(page_title = page_title, layout = layout)
@@ -40,6 +40,7 @@ Mes = [1,2,3,4,5,6,7,8,9,10,11,12]
 Anyo = [2022,2023]
 graficos = ['Bicicletas disponibles', 'Espacios libres disponibles', 'Estaciones cerradas']
 
+st.header('Datos históricos')
 st.write('Selecciona un día, mes, año y hora, y haz click en Guardar datos.')
 with st.form('entry_form', clear_on_submit = False):
     col1, col2, col3, col4 = st.columns(4)
