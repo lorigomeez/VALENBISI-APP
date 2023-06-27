@@ -286,7 +286,7 @@ variables = ['Dia', 'Mes', 'Año', 'Hora','name']
 target = ['avg_av','avg_free', 'avg_total']
 
 # Realizar codificación one-hot para la variable "name"
-name_encoder = OneHotEncoder(sparse=False)
+name_encoder = OneHotEncoder(sparse_output=False)
 column_transformer = make_column_transformer((name_encoder, ['name']), remainder='passthrough')
 data_encoded = column_transformer.fit_transform(data[variables])
 
