@@ -114,11 +114,13 @@ with st.form('entry_form', clear_on_submit = False):
 ### MAPA
 import zipfile
 import streamlit as st
+import folium
 
 
 st.header('ESTACIONES MÁS CERCANAS')
 st.write('Selecciona un punto en el mapa')
 ## OBTENER COORDENADAS
+
 # Coordenadas iniciales de Valencia
 initial_coords = (39.46975, -0.37739)
 
